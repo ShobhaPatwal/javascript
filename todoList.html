@@ -9,126 +9,126 @@
         .wrapper{width:80%;margin:50px auto 0}.wrapper table tr td{border-top:none;width:33.33%}
         </style>
         <script>
-            tasks = [];
-            completed = [];
-            function addTask() {
-                //debugger;
-                var task = document.getElementById("task").value;
-                if (task == '') {
-                    alert("Add task");
-                }
-                else {
+        tasks = [];
+        completed = [];
+        function addTask() {
+            //debugger;
+            var task = document.getElementById("task").value;
+            if (task == '') {
+                alert("Add task");
+            }
+            else {
                 tasks.push(task);
                 document.getElementById("task").value = '';
                 showTask();
+            }
+        }
+        function showTask() {
+            var html = '';
+            for (var i = 0; i < tasks.length; i++) {
+                html += '<tr><td><div class="checkbox"><label class="mr-4"><input type="checkbox"  class="mr-3" value="" id="checked'+i+'" onclick="checkTask('+i+')">' +tasks[i]+ '</label></div></td><td><div class="form-group  mb-0"><input type="text" class="form-control" id="task'+i+'" disabled></div></td><td><button type="button" class="btn btn-success" id="editTask'+i+'" onclick="editTask('+i+')">Edit</button> <button type="button" style="display:none;" class="btn btn-success" id="updateTask'+i+'" onclick="updateTask('+i+')">Edit</button>  <button type="button" class="btn btn-danger" onclick="deleteTask('+i+')">Delete</button></td></tr>';
+        	}
+        	document.getElementById('todoTasks').innerHTML =  html;
+        }
+        function editTask(id) {
+            for (var i = 0; i < tasks.length; i++) {
+                if (i == id) {
+                    var inputId = "task"+i;
+                    var edit = "editTask"+i;
+                    var update = "updateTask"+i;
+                    document.getElementById(inputId).value = tasks[i];
+                    document.getElementById(inputId).disabled = false; 
+                    document.getElementById(edit).style.display = "none";
+                    document.getElementById(update).style.display = "inline-block";
                 }
             }
-            function showTask() {
-                var html = '';
-                for (var i = 0; i < tasks.length; i++) {
-                	html += '<tr><td><div class="checkbox"><label class="mr-4"><input type="checkbox"  class="mr-3" value="" id="checked'+i+'" onclick="checkTask('+i+')">' +tasks[i]+ '</label></div></td><td><div class="form-group  mb-0"><input type="text" class="form-control" id="task'+i+'" disabled></div></td><td><button type="button" class="btn btn-success" id="editTask'+i+'" onclick="editTask('+i+')">Edit</button> <button type="button" style="display:none;" class="btn btn-success" id="updateTask'+i+'" onclick="updateTask('+i+')">Edit</button>  <button type="button" class="btn btn-danger" onclick="deleteTask('+i+')">Delete</button></td></tr>';
+        }
+        function updateTask(id) {
+            for (var i = 0; i < tasks.length; i++) {
+                if (i == id) {
+                    var inputId = "task"+i;
+                    var edit = "editTask"+i;
+                    var update = "updateTask"+i;
+                    tasks[i] = document.getElementById(inputId).value;
+                    document.getElementById(edit).style.display = "inline-block";
+                    document.getElementById(update).style.display = "none";
+                }
+            }
+            showTask();
+        }
+        function deleteTask(id) {
+  			tasks.splice(id, 1);
+            showTask();
+        }
+        function checkTask(id) {
+            var checkTask = "checked"+id;
+            var checkBox = document.getElementById(checkTask);
+            for (var i = 0; i < tasks.length; i++) {
+                if (i == id) {
+                    if (checkBox.checked == true){
+                        completed.push(tasks[i]);
+                        tasks.splice(id, 1);
+                        console.log(tasks);
+                        console.log(completed);
+                    }
+                    showTask();
+                    completedTask();
+                }
+            }
+        }
+        function completedTask() {
+             var html = '';
+            for (var i = 0; i < completed.length; i++) {
+                html += '<tr><td><div class="checkbox"><label class="mr-4"><input type="checkbox"  class="mr-3" value="" id="unchecked'+i+'" onclick="uncheckTask('+i+')" checked>' +completed[i]+ '</label></div></td><td><div class="form-group  mb-0"><input type="text" class="form-control" id="completed'+i+'" disabled></div></td><td><button type="button" class="btn btn-success" id="edit'+i+'" onclick="editCompletedTask('+i+')">Edit</button>  <button type="button" style="display:none;" class="btn btn-success" id="update'+i+'" onclick="updateCompletedTask('+i+')">Edit</button> <button type="button" class="btn btn-danger" onclick="deleteCompletedTask('+i+')">Delete</button></td></tr>';
         		}
-        		document.getElementById('todoTasks').innerHTML =  html;
-            }
-            function editTask(id) {
-                for (var i = 0; i < tasks.length; i++) {
-                    if (i == id) {
-                        var inputId = "task"+i;
-                        var edit = "editTask"+i;
-                        var update = "updateTask"+i;
-                        document.getElementById(inputId).value = tasks[i];
-                        document.getElementById(inputId).disabled = false; 
-                        document.getElementById(edit).style.display = "none";
-                        document.getElementById(update).style.display = "inline-block";
-                    }
+        	document.getElementById('completedTasks').innerHTML =  html;
+        }
+        function editCompletedTask(id) {
+            for (var i = 0 ; i < completed.length; i++) {
+                if (id == i) {
+                    var complete = "completed"+i;
+                    var edit = "edit"+i;
+                    var update = "update"+i;
+                    document.getElementById(complete).value = completed[i];
+                    document.getElementById(complete).disabled = false; 
+                    document.getElementById(edit).style.display = "none";
+                    document.getElementById(update).style.display = "inline-block";
                 }
             }
-            function updateTask(id) {
-                for (var i = 0; i < tasks.length; i++) {
-                    if (i == id) {
-                        var inputId = "task"+i;
-                        var edit = "editTask"+i;
-                        var update = "updateTask"+i;
-                        tasks[i] = document.getElementById(inputId).value;
-                        document.getElementById(edit).style.display = "inline-block";
-                        document.getElementById(update).style.display = "none";
-                    }
-                }
-                showTask();
-            }
-            function deleteTask(id) {
-  				tasks.splice(id, 1);
-                showTask();
-            }
-            function checkTask(id) {
-                var checkTask = "checked"+id;
-                var checkBox = document.getElementById(checkTask);
-                for (var i = 0; i < tasks.length; i++) {
-                    if (i == id) {
-                        if (checkBox.checked == true){
-                            completed.push(tasks[i]);
-                            tasks.splice(id, 1);
-                            console.log(tasks);
-                            console.log(completed);
-                        }
-                        showTask();
-                        completedTask();
-                    }
+        }
+        function updateCompletedTask(id) {
+            for (var i = 0; i < completed.length; i++) {
+                if (i == id) {
+                    var complete = "completed"+i;
+                    var edit = "edit"+i;
+                    var update = "update"+i;
+                    completed[i] = document.getElementById(complete).value;
+                    document.getElementById(edit).style.display = "inline-block";
+                    document.getElementById(update).style.display = "none";
                 }
             }
-            function completedTask() {
-                var html = '';
-                for (var i = 0; i < completed.length; i++) {
-                	html += '<tr><td><div class="checkbox"><label class="mr-4"><input type="checkbox"  class="mr-3" value="" id="unchecked'+i+'" onclick="uncheckTask('+i+')" checked>' +completed[i]+ '</label></div></td><td><div class="form-group  mb-0"><input type="text" class="form-control" id="completed'+i+'" disabled></div></td><td><button type="button" class="btn btn-success" id="edit'+i+'" onclick="editCompletedTask('+i+')">Edit</button>  <button type="button" style="display:none;" class="btn btn-success" id="update'+i+'" onclick="updateCompletedTask('+i+')">Edit</button> <button type="button" class="btn btn-danger" onclick="deleteCompletedTask('+i+')">Delete</button></td></tr>';
+            completedTask();
+        }
+        function uncheckTask(id) {
+            var checkTask = "unchecked"+id;
+            var checkBox = document.getElementById(checkTask);
+            for (var i = 0; i < completed.length; i++) {
+                if (i == id) {  
+                    if (checkBox.checked == false){
+                        tasks.push( completed[i]);
+                        completed.splice(id, 1);
+                        console.log(tasks);
+                        console.log(completed);
+                    }
+                    showTask();
+                    completedTask();
         		}
-        		document.getElementById('completedTasks').innerHTML =  html;
             }
-            function editCompletedTask(id) {
-                for (var i = 0 ; i < completed.length; i++) {
-                    if (id == i) {
-                        var complete = "completed"+i;
-                        var edit = "edit"+i;
-                        var update = "update"+i;
-                        document.getElementById(complete).value = completed[i];
-                        document.getElementById(complete).disabled = false; 
-                        document.getElementById(edit).style.display = "none";
-                        document.getElementById(update).style.display = "inline-block";
-                    }
-                }
-            }
-            function updateCompletedTask(id) {
-                for (var i = 0; i < completed.length; i++) {
-                    if (i == id) {
-                        var complete = "completed"+i;
-                        var edit = "edit"+i;
-                        var update = "update"+i;
-                        completed[i] = document.getElementById(complete).value;
-                        document.getElementById(edit).style.display = "inline-block";
-                        document.getElementById(update).style.display = "none";
-                    }
-                }
-                completedTask();
-            }
-            function uncheckTask(id) {
-                var checkTask = "unchecked"+id;
-                var checkBox = document.getElementById(checkTask);
-                for (var i = 0; i < completed.length; i++) {
-                    if (i == id) {  
-                        if (checkBox.checked == false){
-                            tasks.push( completed[i]);
-                            completed.splice(id, 1);
-                            console.log(tasks);
-                            console.log(completed);
-                        }
-                        showTask();
-                        completedTask();
-        		    }
-                }
-            }
-            function deleteCompletedTask(id) {
-                completed.splice(id, 1);
-                completedTask();
-            }
+        }
+        function deleteCompletedTask(id) {
+            completed.splice(id, 1);
+            completedTask();
+        }
         </script>
     </head>
     <body>
