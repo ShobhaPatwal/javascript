@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Javascript Task 2</title>
+        <link rel="stylesheet" href="javascript_task2.css">
+        <script>
+        	var products = [];
+        	var product;
+        	
+        	function addProduct() {
+        		var id = document.getElementById("product_id").value;
+                var name = document.getElementById("product_name").value;
+                var price = document.getElementById("product_price").value;
+                product = {
+                	productId: id,
+                    productName: name,
+                    productPrice: price
+                };
+                for (var i = 0; i < products.length; i++) {
+                	var flag = false;
+                    if (id == products[i].productId) {
+                		flag = true;
+                		break;
+                	}
+        		}
+                if (flag == true) {
+                	alert('Enter unique Product Id');
+                }
+                else {
+                		products.push(product);
+                }
+                var html = "";
+        		html += "<table><tr><td>Product Id</td><td>Product Name</td><td>Product Price</td></tr>";
+                for (var i = 0; i < products.length; i++) {
+                	html += "<tr>";
+        			html += "<td>" + products[i].productId + "</td>";
+        			html += "<td>" + products[i].productName + "</td>";
+        			html += "<td>" + products[i].productPrice + "</td>";
+        			html += "</tr>";
+        		}
+        		html += "</table>";
+        		document.getElementById('products').innerHTML =  html;
+        	}
+		</script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="col-15">
+        		<label for="product_id">Product Id</label>
+      		</div>
+            <div class="col-85">
+        		<input type="text" name="product_id" id="product_id">
+        	</div>
+            <div class="col-15">
+        		<label for="product_name">Product Name</label>
+      		</div>
+            <div class="col-85">
+        		<input type="text" name="product_name" id="product_name">
+        	</div>
+        	<div class="col-15">
+        		<label for="product_price">Product Price</label>
+      		</div>
+            <div class="col-85">
+        		<input type="number" name="product_price" id="product_price">
+        	</div>
+        	<div><input type="button" id="submit" onclick="addProduct()" value="ADD PRODUCT"></div>
+            <div id="products"></div>
+        </div>
+    </body>
+</html>

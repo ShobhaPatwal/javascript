@@ -1,0 +1,62 @@
+/*To include border and padding within wdith of element */
+* {
+	box-sizing: border-box;
+}
+body {
+	margin:70px;
+	font-family: sans-serif;
+}
+.wrapper {
+	font-size: 16px;
+}
+.wrapper .col-15 {
+	float: left;
+    width: 15%;
+    margin-top: 6px;
+}
+.wrapper .col-85 {
+	float: left;
+    width: 85%;
+    margin-top: 6px;
+}
+.wrapper input {
+	font-size: 16px;
+	margin-bottom: 20px;
+	padding: 5px;
+}
+.wrapper input[type=button] {
+	margin:20px 0;
+	padding: 20px 50px;
+    border: 3px solid #000000;
+}
+.wrapper #products {
+	margin-top:20px;
+}
+.wrapper #products table {
+	width:60%;
+}
+.wrapper #products table tr td {
+	padding:10px 20px;
+}
+/* Responsive div */
+@media (max-width: 1000px) and (min-width:601px) {
+	.wrapper .col-15 {
+		width: 25%;
+    }
+    .wrapper .col-85 {
+       width: 75%;
+    }
+}
+@media screen and (max-width: 1000px) {
+	.wrapper #products table {
+	  width:100%;
+	}
+}
+@media screen and (max-width: 600px) {
+    .wrapper .col-15, .wrapper .col-85, input[type=submit] {
+      width: 100%;
+    }
+    .wrapper #products table tr td {
+      padding: 10px;
+    }
+}

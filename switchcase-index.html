@@ -1,0 +1,98 @@
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>Show message on giving values for name, age & weight of user</title>
+            <script>
+                function showMessage() {
+                    var uname = document.getElementById("username").value;
+                    var age = document.getElementById("age").value;
+                    var weight = document.getElementById("weight").value;
+                    //console.log("age:"+ age);
+                    switch(true) {
+                        case (age >= 5 && age <= 7):
+                            //if weight is greater than or equal to 15 and less than or equal to 20
+                            if (weight >= 15 && weight <= 20) {
+                                message = "Your weight is perfect";
+                            }
+                            //if weight is less than 15
+                            else if (weight < 15) {
+                                message = "Your weight is less than recommended value of 15KG at an age of " + age;
+                            }
+                            //if weight is greater than 20
+                            else {
+                                message = "Your weight is greater than recommended value of 20KG at an age of " + age;
+                            }
+                            break;
+                        case (age >= 8 && age <= 10):
+                            //if weight is greater than or equal to 21 and less than or equal to 25
+                            if (weight >= 21 && weight <= 25) {
+                                message = "Your weight is perfect";
+                            }
+                            //if weight is less than 21
+                            else if (weight < 21) {
+                                message = "Your weight is less than recommended value of 21KG at an age of " + age;
+                            }
+                            //if weight is greater than 25
+                            else {
+                                message = "Your weight is greater than recommended value of 25KG at an age of " + age;
+                            }
+                            break;
+                        case (age >= 11 && age <= 15):
+                            if (weight >= 26 && weight <= 30) {
+                                message = "Your weight is perfect";
+                            }
+                            //if weight is less than 26
+                            else if (weight < 26) {
+                                message = "Your weight is less than recommended value of 26KG at an age of " + age;
+                            }
+                            //if weight is greater than 30
+                            else {
+                                message = "Your weight is greater than recommended value of 30KG at an age of " + age;
+                            }
+                            break;
+                        case (age >= 16 && age <= 20):
+                            if (weight >= 31 && weight <= 40) {
+                                message = "Your weight is perfect";
+                            }
+                            //if weight is less than 31
+                            else if (weight < 31) {
+                                message = "Your weight is less than recommended value of 31KG at an age of " + age;
+                            }
+                            //if weight is greater than 40
+                            else {
+                                message = "Your weight is greater than recommended value of 40KG at an age of " + age;
+                            }
+                            break;
+                        default:
+                            message = "You have enter invalid input";
+                    }
+                    document.getElementById("result").innerHTML = "Hello " + uname + " !!! " + message + ".";
+                }
+            </script>
+            <style>
+                body {
+                    font-size: 18px;
+                    font-family: sans-serif;
+                }
+                .wrapper {
+                    padding: 20px;
+                }
+                .wrapper input {
+                    font-size: 18px;
+                    margin-bottom: 30px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="wrapper">
+                <label for="username">Name</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" name="username" id="username" />
+                <br />
+                <label for="age">Age</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="number" name="age" id="age" required /><br />
+                <label for="weight">Weight</label>&nbsp;&nbsp;
+                <input type="number" name="weight" id="weight" required />
+                <p><input type="button" id="submit" onclick="showMessage()" value="Submit" /></p>
+                <p id="result"></p>
+            </div>
+        </body>
+    </html>

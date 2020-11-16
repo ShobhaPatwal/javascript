@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Javascript Test 3</title>
+        <script>
+            function calculate() {
+                var length = document.getElementById("length").value;
+                var width = document.getElementById("width").value;
+                var area = Number(length) * Number(width);
+                var perimeter = 2 * (Number(length) + Number(width));
+                console.log(perimeter);
+                document.getElementById("result").innerHTML = "<div>Area is " + area + " sq. mtr.</div><div>Perimeter is " + perimeter + " mtr</div>";
+            }
+        </script>
+        <style>
+            body {
+                font-size: 18px;
+                font-family: sans-serif;
+            }
+            .wrapper {
+                padding: 20px;
+            }
+            .wrapper input {
+                font-size: 18px;
+                margin-bottom: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <label for="length">Length Of Rectangle</label>&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="number" name="length" id="length" required> mtr
+            <br />
+            <label for="width">Width Of Rectangle</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="number" name="width" id="width" required> mtr
+            <p><input type="button" id="calculate" onclick="calculate()" value="Calculate Area & Perimeter" /></p>
+            <p id="result"></p>
+        </div>
+    </body>
+</html>

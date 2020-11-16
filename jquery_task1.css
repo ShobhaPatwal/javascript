@@ -1,0 +1,85 @@
+body{
+	font-family: Arial;
+	font-size: 16px;
+}
+
+#wrapper{
+	width: 80%;
+	margin: 20px auto 0;
+}
+
+#add_product_form label{
+	display: block;
+	margin-top: 10px;
+}
+
+#add_product_form label span{
+	width: 150px;
+	display: inline-block;
+}
+#add_product_form .submit{
+	margin-top: 40px;
+}
+#add_product_form input{
+	font-size:16px;
+}
+#add_product_form .submit input[type="button"]{
+	border-radius: 5px;
+	border: 1px solid #eeeeee;
+	padding: 10px;
+	background:#9e9e9e78;
+}
+#add_product_form input.invalid {
+	border:1px solid red;
+}
+#notification > div{
+	padding: 10px;
+	font-weight: bold;
+	border-radius: 5px;
+	margin-bottom: 20px;
+	position: relative;
+}
+
+#notification .close{
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	text-decoration: none;
+}
+
+#notification .success{
+	border: 1px solid green;
+	background: #7ED47E;
+}
+
+#notification .error{
+	border: 1px solid red;
+	background: #FF5733;
+}
+
+#product_list .delete{
+	margin-left: 10px;
+}
+
+#product_list table{
+	/* width: 400px;*/
+}
+
+#product_list table th{
+	text-align: left;
+}
+.popup-overlay {
+  /*Hides pop-up when there is no "active" class*/
+  visibility: hidden;
+  position: fixed; 
+  z-index: 1; 
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.4);
+}
+
+

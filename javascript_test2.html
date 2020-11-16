@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Javascript Test 2</title>
+        <script>
+            function calculate(operation) {
+                var firstNumber = document.getElementById("first_num").value;
+                var secNumber = document.getElementById("sec_num").value;
+                if (operation ==  "multiply"){ 
+                    var result = firstNumber * secNumber;
+                    document.getElementById("result").innerHTML = "The Result Is:<br/> " + result;
+                }
+                else if (operation == "divide"){
+                    var result = firstNumber / secNumber;
+                    document.getElementById("result").innerHTML = "The Result Is:<br/> " + result;
+                }
+            }
+        </script>
+        <style>
+            body {
+                font-size: 18px;
+                font-family: sans-serif;
+            }
+            .wrapper {
+                padding: 20px;
+            }
+            .wrapper input {
+                font-size: 18px;
+                margin-bottom: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <p>Write a Javascript program to calculate multiplication and division of two numbers (input from user).</p>
+            <p>Sample Form:</p>
+            <label for="first_num">1st Number:</label>&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="number" name="first_num" id="first_num">
+            <br />
+            <label for="sec_num">2nd Number:</label>&nbsp;&nbsp;&nbsp; 
+            <input type="number" name="sec_num" id="sec_num">
+            <p><input type="button" id="multiply" onclick="calculate('multiply')" value="Multiply" /> &nbsp;&nbsp;<input type="button" id="divide" onclick="calculate('divide')" value="Divide" /></p>
+            <p id="result"></p>
+        </div>
+    </body>
+</html>

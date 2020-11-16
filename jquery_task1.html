@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+  	<head>
+	 	<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>jQuery Task 1</title>
+		<link rel="stylesheet" type="text/css" href="jquery_task1.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+  	<body>
+		<div id="wrapper">
+			<!-- Add product form -->
+			<div id="add_product_form">
+				<label for="product_sku">
+					<span>Product SKU</span> 
+					<input type="text" name="product_sku" id="product_sku">
+				</label>
+				<label for="product_name">
+					<span>Product Name</span> 
+					<input type="text" name="product_name" id="product_name">
+				</label>
+				<label for="product_price">
+					<span>Product Price</span> 
+					<input type="text" name="product_price" id="product_price">
+				</label>
+				<label for="product_quantity">
+					<span>Product Quantity</span> 
+					<input type="text" name="product_quantity" id="product_quantity">
+				</label>
+				<p class="submit">					
+					<input type="button" id="add_product" value="Add Product" />
+
+					<input type="button" id="update_product" style="display: none" value="Update Product" />
+				</p>
+			</div>
+			<!-- message/error box-->
+			<div id="notification"></div>
+			<!-- products table --->
+			<div id="product_list">
+				<table border="1" cellspacing = "0px" cellpadding = "10px">
+					<thead>
+                    	<tr>
+                        	<th>SKU</th>
+							<th>Name</th>
+							<th>Price</th>
+							<th>Quantity</th>
+							<th>Action</th>
+                    	</tr>
+                	</thead>
+                	<tbody>
+                		
+                	</tbody>
+				</table>
+			</div>
+		</div>
+		<script>
+			//initialize products array
+			var products = [];
+			var Sku_id;
+			$(document).ready(function(){
+				$("#add_product").click(function(){
+					addProduct();
+				});
+			});
+			function addProduct() {
+				var productSku = $("#product_sku").val();
+				var productName = $("#product_name").val();
+				// convert price into float type
+				var productPrice = parseFloat($("#product_price").val()).toFixed(2);
+				var productQuantity = $("#product_quantity").val();
+				//check errors
+				if (!$("#product_sku").val()) {
+					$("#product_sku").addClass("invalid");
+					$("#notification").html("<div class='alert error'>* SKU field is empty<a href='#' class='close' data-dismiss='alert'>X</a></div>");
+				}
+				else if (!$("#product_name").val()) {
+					$("#product_name").addClass("invalid");
+					$("#notification").html("<div class='alert error'>* Name field is empty<a href='#' class='close' data-dismiss='alert'>X</a></div>");
+				}
+				else if (!$("#product_price").val()) {
+					$("#product_price").addClass("invalid");
+					$("#notification").html("<div class='alert error'>* Price field is empty<a href='#' class='close' data-dismiss='alert'>X</a></div>");
+				}
+				else if (!$("#product_quantity").val()) {
+					$("#product_quantity").addClass("invalid");
+					$("#notification").html("<div class='alert error'>* Quantity field is empty<a href='#' class='close' data-dismiss='alert'>X</a></div>");
+				} 
+				else if (!$.isNumeric(productSku))  {
+					$("#product_sku").addClass("invalid");
+					$("#notification").html("<div class='alert error'>* SKU field should be integer<a href='#' class='close' data-dismiss='alert'>X</a></div>");
+				} 
+				else if ($.isNumeric(productName))  {
+					$("#product_name").addClass("invalid");
+					$("#notification").html("<div class='alert error'>* Name field should be string<a href='#' class='close' data-dismiss='alert'>X</a></div>");
+				}
+				else if (!$.isNumeric(productPrice))  {
+					$("#product_price").addClass("invalid");
+					$("#notification").html("<div class='alert error'>* Price field should be integer<a href='#' class='close' data-dismiss='alert'>X</a></div>");
+				}
+				else if (!$.isNumeric(productQuantity))  {
+					$("#product_quantity").addClass("invalid");
+					$("#notification").html("<div class='alert error'>* Quantity field should be integer<a href='#' class='close' data-dismiss='alert'>X</a></div>");
+				}
+				//add product into products array
+				else {
+					var product = {};
+                	product.sku = productSku;
+                	product.name = productName;
+                	product.price = productPrice;
+                	product.quantity = productQuantity;
+                	for (var i = 0; i < products.length; i++) {
+                		var flag = false;
+                    	if (productSku == products[i].sku) {
+                			flag = true;
+                			break;
+                		}
+        			}
+                	if (flag == true) {
+                		$("#notification").html("<div class='alert error'>This Product SKU already Exist.<a href='#' class='close' data-dismiss='alert'>X</a></div>");
+                	}
+                	else {
+                		products.push(product);
+                		$("#notification").html("<div class='alert success'>Product Added Successfully.<a href='#' class='close' data-dismiss='alert'>X</a></div>");
+                		$("input").removeClass("invalid");
+					}
+				    $("#product_sku").val('');
+                	$("#product_name").val('');
+				    $("#product_price").val('');
+				    $("#product_quantity").val('');
+                	showProduct();
+				}
+			}
+			//show products in table
+			function showProduct() {
+				var rows = "";
+        		for ( i = 0; i < products.length; i++) {
+					rows += "<tr><td>" + products[i].sku + "</td><td>" + products[i].name + "</td><td>$ " + products[i].price + "</td><td>" + products[i].quantity + "</td><td><a href='#' class='edit' onclick='editProduct(" + products[i].sku + ")'>Edit</a><a href='#' class='delete' onclick='deleteProduct(" + i + ")'>Delete</a></td></tr>";
+				}				
+                $("tbody").html(rows);
+			}
+			// change add button
+			function changeButton()
+			{
+				$("#add_product").hide();
+				$("#update_product").show();
+			}
+			//edit button event
+			function editProduct(Sku) {
+				changeButton();
+				for(i=0;i<products.length;i++)
+				{
+					if(products[i].sku == Sku)
+					{
+						console.log(products[i].sku);
+						$("#product_sku").val(products[i].sku);
+						$("#product_name").val(products[i].name);
+						$("#product_price").val(products[i].price);
+						$("#product_quantity").val(products[i].quantity);
+						updateProduct(products[i].sku);
+					}
+				}			  
+            }
+            //updates product
+            function updateProduct(Sku){
+				Sku_id = Sku;
+				$('#update_product').click(function(){
+					for(i=0;i<products.length;i++)
+						{
+							if(products[i].sku == Sku_id)
+							{                	
+								console.log("in click of update product id="+Sku_id);
+								if (!$.isNumeric($("#product_sku").val()))  {
+									$("#product_sku").addClass("invalid");
+									$("#notification").html("<div class='alert error'>* SKU field should be integer<a href='#' class='close' data-dismiss='alert'>X</a></div>");
+								} 
+								else if ($.isNumeric($("#product_name").val()))  {
+									$("#product_name").addClass("invalid");
+									$("#notification").html("<div class='alert error'>* Name field should be string<a href='#' class='close' data-dismiss='alert'>X</a></div>");
+								}
+								else if (!$.isNumeric($("#product_price").val()))  {
+									$("#product_price").addClass("invalid");
+									$("#notification").html("<div class='alert error'>* Price field should be integer<a href='#' class='close' data-dismiss='alert'>X</a></div>");
+								}
+								else if (!$.isNumeric($("#product_quantity").val()))  {
+									$("#product_quantity").addClass("invalid");
+									$("#notification").html("<div class='alert error'>* Quantity field should be integer<a href='#' class='close' data-dismiss='alert'>X</a></div>");
+								}
+								else {
+									products[i].sku = $("#product_sku").val();
+									products[i].name = $("#product_name").val();
+									products[i].price = parseFloat($("#product_price").val()).toFixed(2);
+									products[i].quantity = $("#product_quantity").val();
+									$("input").removeClass("invalid");
+									$("#notification").html("<div class='alert success'>Product Updated Successfully.<a href='#' class='close' data-dismiss='alert'>X</a></div>");
+									switchbutton();
+								}
+								
+							}
+					    } 
+					
+					showProduct();
+                });
+			}
+			function switchbutton() 
+			{	
+				$("#add_product").show();
+				$("#update_product").hide();
+			}
+			//delete product
+			function deleteProduct(id) {
+				var result = confirm("Are you sure you want to delete the product?");
+  				if (result==true) {
+  					products.splice(id, 1);
+  					$("#notification").html("<div class='alert success'>Product Deleted Successfully.<a href='#' class='close' data-dismiss='alert'>X</a></div>");
+                    showProduct();
+  				} 
+  				else {
+  					return false;
+  				}
+            }
+		</script>
+ 	</body>
+</html>
