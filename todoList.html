@@ -9,11 +9,12 @@
         .wrapper{width:80%;margin:50px auto 0}.wrapper table tr td{border-top:none;width:33.33%}
         </style>
         <script>
-        tasks = [];
-        completed = [];
+        var tasks = [];
+        var completed = [];
         function addTask() {
             //debugger;
             var task = document.getElementById("task").value;
+            task = task.replace( /(<([^>]+)>)/ig, '');
             if (task == '') {
                 alert("Add task");
             }
@@ -26,7 +27,7 @@
         function showTask() {
             var html = '';
             for (var i = 0; i < tasks.length; i++) {
-                html += '<tr><td><div class="checkbox"><label class="mr-4"><input type="checkbox"  class="mr-3" value="" id="checked'+i+'" onclick="checkTask('+i+')">' +tasks[i]+ '</label></div></td><td><div class="form-group  mb-0"><input type="text" class="form-control" id="task'+i+'" disabled></div></td><td><button type="button" class="btn btn-success" id="editTask'+i+'" onclick="editTask('+i+')">Edit</button> <button type="button" style="display:none;" class="btn btn-success" id="updateTask'+i+'" onclick="updateTask('+i+')">Edit</button>  <button type="button" class="btn btn-danger" onclick="deleteTask('+i+')">Delete</button></td></tr>';
+                html += '<tr><td><div class="checkbox"><label class="mr-4"><input type="checkbox"  class="mr-3" id="checked'+i+'" onclick="checkTask('+i+')">' +tasks[i]+ '</label></div></td><td><div class="form-group  mb-0"><input type="text" class="form-control" id="task'+i+'" disabled></div></td><td><button type="button" class="btn btn-success" id="editTask'+i+'" onclick="editTask('+i+')">Edit</button> <button type="button" style="display:none;" class="btn btn-success" id="updateTask'+i+'" onclick="updateTask('+i+')">Edit</button>  <button type="button" class="btn btn-danger" onclick="deleteTask('+i+')">Delete</button></td></tr>';
         	}
         	document.getElementById('todoTasks').innerHTML =  html;
         }
@@ -79,13 +80,13 @@
         function completedTask() {
              var html = '';
             for (var i = 0; i < completed.length; i++) {
-                html += '<tr><td><div class="checkbox"><label class="mr-4"><input type="checkbox"  class="mr-3" value="" id="unchecked'+i+'" onclick="uncheckTask('+i+')" checked>' +completed[i]+ '</label></div></td><td><div class="form-group  mb-0"><input type="text" class="form-control" id="completed'+i+'" disabled></div></td><td><button type="button" class="btn btn-success" id="edit'+i+'" onclick="editCompletedTask('+i+')">Edit</button>  <button type="button" style="display:none;" class="btn btn-success" id="update'+i+'" onclick="updateCompletedTask('+i+')">Edit</button> <button type="button" class="btn btn-danger" onclick="deleteCompletedTask('+i+')">Delete</button></td></tr>';
+                html += '<tr><td><div class="checkbox"><label class="mr-4"><input type="checkbox"  class="mr-3" id="unchecked'+i+'" onclick="uncheckTask('+i+')" checked>' +completed[i]+ '</label></div></td><td><div class="form-group  mb-0"><input type="text" class="form-control" id="completed'+i+'" disabled></div></td><td><button type="button" class="btn btn-success" id="edit'+i+'" onclick="editCompletedTask('+i+')">Edit</button>  <button type="button" style="display:none;" class="btn btn-success" id="update'+i+'" onclick="updateCompletedTask('+i+')">Edit</button> <button type="button" class="btn btn-danger" onclick="deleteCompletedTask('+i+')">Delete</button></td></tr>';
         		}
         	document.getElementById('completedTasks').innerHTML =  html;
         }
         function editCompletedTask(id) {
             for (var i = 0 ; i < completed.length; i++) {
-                if (id == i) {
+                if (i == id) {
                     var complete = "completed"+i;
                     var edit = "edit"+i;
                     var update = "update"+i;
@@ -115,7 +116,7 @@
             for (var i = 0; i < completed.length; i++) {
                 if (i == id) {  
                     if (checkBox.checked == false){
-                        tasks.push( completed[i]);
+                        tasks.push(completed[i]);
                         completed.splice(id, 1);
                         console.log(tasks);
                         console.log(completed);

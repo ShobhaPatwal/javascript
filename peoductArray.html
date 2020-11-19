@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ajax</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <button type="button">Get Products</button>
+        <br/> <br/> <br/>
+        <table border="1">
+            <thead>
+                <th>Product SKU</th>
+                <th>Product Name</th>
+                <th>Product Price</th>
+            </thead>
+            <tbody id="products">
+
+            </tbody>
+        </table>
+
+        <div id="product">
+
+        </div>
+
+        <script>
+            $(document).ready(function() {
+                $('button:button').click(function() {
+                    $.ajax({
+                        url: 'ajax.php',
+                        type: 'GET',
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function(response){
+                            //$('#products').html(response);
+                            //alert(response.product);
+                            console.log(response);
+                            var len = response.length;
+                            var product = '';
+                            for(var i=0; i<len; i++){
+                                var sku = response[i].sku;
+                                var name = response[i].name;
+                                var price = response[i].price;
+                                
+                                product += "<tr>" +
+                                    "<td align='center'>" + sku + "</td>" +
+                                    "<td align='center'>" + name + "</td>" +
+                                    "<td align='center'>" + price + "</td>" 
+                                    "</tr>";
+                                
+                            }
+                            $("#products").html(product);
+                        },
+                        error: function() {
+                            alert('Error');
+                        }
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
